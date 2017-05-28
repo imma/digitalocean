@@ -4,7 +4,23 @@ function main {
   local shome="$(cd -P -- "${BASH_SOURCE%/*}/.." && pwd -P)"
   source "$shome/script/profile"
 
-  uname -a
+  local url_digitalocean
+
+  case "$(uname -s)" in
+    Darwin) url_digitalocean="https://github.com/digitalocean/doctl/releases/download/v${DOCTL_VERSION}/doctl-${DOCTL_VERSION}-darwin-10.6-amd64.tar.gz" ;;
+    *)      url_digitalocean="https://github.com/digitalocean/doctl/releases/download/v${DOCTL_VERSION}/doctl-${DOCTL_VERSION}-linux-amd64.tar.gz" ;;
+  esac
+
+  local tmp_digitalocean="$(mktemp -t XXXXXX)"
+  trap "$(printf "rm -f '%q'" "$tmp_digitalocean")" EXIT
+  curl -sS -L -o "$tmp_digitalocean" "$url_digitalocean"
+  chmod 755 "$tmp_digitalocean"
+  mkdir -p "$shome/vendor"
+  mv -f "$tmp_digitalocean" "$shome/vendor/doctl-${DOCTL_VERSION}.tgz"
+  (cd "$shome/vendor" && tar xfz "doctl-${DOCTL_VERSION}.tgz")
+  mkdir -p "$shome/bin"
+  mv -f "$shome/vendor/doctl" "$shome/bin/"
+  chmod 755 "$shome/bin/doctl"
 }
 
 main "$@"
