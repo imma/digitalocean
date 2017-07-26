@@ -6,8 +6,8 @@ function _digitalocean_profile {
 
   DOCTL_VERSION='1.7.0'
 
-  if [[ -f "$BOARD/.config/doctl/config.yaml" ]]; then
-    export DIGITALOCEAN_TOKEN="$(cat "$BOARD/.config/doctl/config.yaml" 2>/dev/null | awk '$1 == "access-token:" { print $2 }' || true)"
+  if [[ -f "$BOARD_PATH/.config/doctl/config.yaml" ]]; then
+    export DIGITALOCEAN_TOKEN="$(cat "$BOARD_PATH/.config/doctl/config.yaml" 2>/dev/null | awk '$1 == "access-token:" { print $2 }' || true)"
   fi
 }
 
