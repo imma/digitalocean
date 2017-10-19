@@ -7,8 +7,8 @@ function main {
   local url_digitalocean
 
   case "${DISTRIB_ID}" in
-    Darwin)        url_digitalocean="https://github.com/digitalocean/doctl/releases/download/v${DOCTL_VERSION}/doctl-${DOCTL_VERSION}-darwin-10.6-amd64.tar.gz" ;;
-    Ubuntu|Amazon) url_digitalocean="https://github.com/digitalocean/doctl/releases/download/v${DOCTL_VERSION}/doctl-${DOCTL_VERSION}-linux-amd64.tar.gz" ;;
+    Darwin) url_digitalocean="https://github.com/digitalocean/doctl/releases/download/v${DOCTL_VERSION}/doctl-${DOCTL_VERSION}-darwin-10.6-amd64.tar.gz" ;;
+    *)      url_digitalocean="https://github.com/digitalocean/doctl/releases/download/v${DOCTL_VERSION}/doctl-${DOCTL_VERSION}-linux-amd64.tar.gz" ;;
   esac
 
   local tmp_digitalocean="$(mktemp -t XXXXXX)"
